@@ -1,43 +1,153 @@
-import { useEffect, useRef } from 'react';
+const features = [
+  'Free Strategy Consultation',
+  'Custom AI Integration Roadmap',
+  'Full-Stack Scalability Audit',
+  '24/7 Technical Support'
+];
+
+const CheckIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--brand)' }}>
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
 
 export default function CTABanner() {
-  const ref = useRef(null);
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-    }, { threshold: 0.1 });
-    if (ref.current) obs.observe(ref.current);
-    return () => { if (ref.current) obs.unobserve(ref.current); };
-  }, []);
-
   return (
-    <section id="contact" className="section-dark" style={{ padding: '120px 0' }}>
-      <div className="container reveal" ref={ref}>
-        <div className="cta-layout">
-          <div className="cta-left">
-            <h2 style={{ color: '#fff', maxWidth: '480px' }}>
-              Ready to build something amazing?
+    <section className="cta-section theme--dark" id="contact">
+      <div className="container">
+        <div className="cta-grid">
+          
+          <div className="cta-content">
+            <span className="cta-sub">NEXT STEPS</span>
+            <h2 className="cta-headline">
+              READY TO<br />
+              <span className="text-brand">AUTOMATE</span><br />
+              YOUR FUTURE?
             </h2>
-            <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.45)', maxWidth: '480px', marginTop: '20px', lineHeight: 1.7 }}>
-              Book a free 30-minute strategy call. No pressure, no pitch — just clarity on how Globlyn can help your business thrive online.
+            <p className="cta-description">
+              Stop fighting with manual workflows. Let’s engineer an AI-powered ecosystem that grows with you.
             </p>
+            
+            <div className="cta-perks">
+              {features.map((f, i) => (
+                <div key={i} className="perk-item">
+                  <CheckIcon />
+                  <span>{f}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="cta-right">
-            <a href="#" className="btn btn-white">Let's talk</a>
-            <a href="mailto:hello@globlyn.com" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)', marginTop: '16px', display: 'block' }}>
-              or email hello@globlyn.com
-            </a>
+
+          <div className="cta-portal">
+            <div className="portal-box">
+              <div className="portal-inner">
+                <p className="portal-hint">HAVE A PROJECT IN MIND?</p>
+                <a href="mailto:hello@globlyn.com" className="portal-link">
+                  LET'S TALK
+                  <span className="portal-arrow">→</span>
+                </a>
+                <div className="portal-footer">
+                  <span>AVERAGE RESPONSE TIME: 4 HOURS</span>
+                </div>
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
+
       <style>{`
-        .cta-layout {
-          display: flex; justify-content: space-between; align-items: center;
-          gap: 64px; flex-wrap: wrap;
+        .cta-section {
+          padding: 160px 0;
+          background: var(--charcoal);
+          border-top: 1px solid rgba(255,255,255,0.05);
         }
-        .cta-right { display: flex; flex-direction: column; align-items: flex-start; }
+
+        .cta-grid {
+          display: grid;
+          grid-template-columns: 1.2fr 0.8fr;
+          gap: 100px;
+          align-items: center;
+        }
+
+        .cta-sub { font-size: 12px; font-weight: 800; color: var(--brand); letter-spacing: 0.3em; display: block; margin-bottom: 32px; }
+        
+        .cta-headline {
+          font-family: 'american-typewriter', serif;
+          font-size: clamp(48px, 8vw, 110px);
+          line-height: 0.85;
+          font-weight: 250;
+          margin-bottom: 40px;
+        }
+        .text-brand { color: var(--brand); }
+
+        .cta-description {
+          font-size: 20px;
+          line-height: 1.5;
+          max-width: 500px;
+          opacity: 0.6;
+          margin-bottom: 56px;
+        }
+
+        .cta-perks {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 24px;
+        }
+        .perk-item {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          font-size: 14px;
+          font-weight: 600;
+          opacity: 0.8;
+        }
+
+        /* PORTAL STYLES */
+        .cta-portal { position: relative; }
+        .portal-box {
+          background: var(--white);
+          color: var(--charcoal);
+          padding: 60px;
+          border-radius: 4px;
+          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .portal-box:hover { transform: translateY(-10px) rotate(1deg); }
+
+        .portal-hint { font-size: 10px; font-weight: 900; letter-spacing: 0.1em; opacity: 0.4; margin-bottom: 12px; }
+        
+        .portal-link {
+          font-family: 'american-typewriter', serif;
+          font-size: clamp(40px, 5vw, 64px);
+          text-decoration: none;
+          color: var(--charcoal);
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          line-height: 1;
+          margin-bottom: 40px;
+          transition: color 0.3s;
+        }
+        .portal-link:hover { color: var(--brand); }
+        .portal-arrow { transition: transform 0.3s; }
+        .portal-link:hover .portal-arrow { transform: translateX(10px); }
+
+        .portal-footer {
+          padding-top: 24px;
+          border-top: 1px solid rgba(0,0,0,0.1);
+          font-size: 10px;
+          font-weight: 900;
+          letter-spacing: 0.05em;
+          opacity: 0.5;
+        }
+
+        @media (max-width: 1100px) {
+          .cta-grid { grid-template-columns: 1fr; gap: 80px; }
+          .cta-perks { grid-template-columns: 1fr; }
+        }
         @media (max-width: 768px) {
-          .cta-layout { flex-direction: column; align-items: flex-start; gap: 32px; }
+          .portal-box { padding: 40px; }
+          .cta-headline { font-size: 60px; }
         }
       `}</style>
     </section>

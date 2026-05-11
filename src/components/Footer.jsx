@@ -1,71 +1,48 @@
 export default function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer theme--dark">
       <div className="container">
         <div className="footer-top">
           <div className="footer-brand">
-            <span className="footer-logo">Globlyn<span style={{ color: 'var(--accent-light)' }}>.</span></span>
-            <p className="footer-tagline">Build. Automate. Grow.</p>
+            <span className="footer-logo">GLOBLYN<span>.</span></span>
+            <p className="footer-tagline">BUILD. AUTOMATE. GROW.</p>
           </div>
-          <div className="footer-cols">
-            {[
-              { title: 'Services', links: ['Web Development', 'AI Automation', 'UI/UX Design', 'E-Commerce', 'SEO', 'Maintenance'] },
-              { title: 'Company', links: ['About Us', 'Portfolio', 'Case Studies', 'Blog', 'Careers', 'Contact'] },
-              { title: 'Connect', links: ['hello@globlyn.com', 'LinkedIn', 'Twitter', 'GitHub'] },
-            ].map((col, i) => (
-              <div key={i} className="footer-col">
-                <h4 className="footer-col-title">{col.title}</h4>
-                <ul>
-                  {col.links.map(l => <li key={l}><a href="#">{l}</a></li>)}
-                </ul>
-              </div>
-            ))}
+          <div className="footer-links">
+            <div className="footer-col">
+              <h4>SOCIALS</h4>
+              <a href="#">LINKEDIN</a>
+              <a href="#">TWITTER</a>
+              <a href="#">GITHUB</a>
+            </div>
+            <div className="footer-col">
+              <h4>LEGAL</h4>
+              <a href="#">PRIVACY</a>
+              <a href="#">TERMS</a>
+            </div>
           </div>
         </div>
         <div className="footer-bottom">
-          <span>© 2026 Globlyn. All rights reserved.</span>
-          <div className="footer-legal">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-          </div>
+          <span>© 2026 GLOBLYN. ALL RIGHTS RESERVED.</span>
         </div>
       </div>
       <style>{`
-        .footer {
-          background: var(--bg-dark); padding: 80px 0 32px;
-          color: rgba(255,255,255,0.4); font-size: 14px;
-        }
-        .footer-top {
-          display: flex; justify-content: space-between;
-          padding-bottom: 64px; border-bottom: 1px solid rgba(255,255,255,0.06);
-          gap: 64px; flex-wrap: wrap;
-        }
-        .footer-logo {
-          font-size: 24px; font-weight: 800; color: #fff; letter-spacing: -1px;
-          display: block; margin-bottom: 8px;
-        }
-        .footer-tagline { color: rgba(255,255,255,0.3); }
-        .footer-cols { display: flex; gap: 64px; flex-wrap: wrap; }
-        .footer-col-title {
-          font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.6);
-          text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px;
-        }
-        .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
-        .footer-col a {
-          color: rgba(255,255,255,0.4); transition: color 0.2s;
-        }
-        .footer-col a:hover { color: #fff; }
-        .footer-bottom {
-          display: flex; justify-content: space-between; align-items: center;
-          padding-top: 32px; flex-wrap: wrap; gap: 16px;
-        }
-        .footer-legal { display: flex; gap: 24px; }
-        .footer-legal a { color: rgba(255,255,255,0.3); }
-        .footer-legal a:hover { color: rgba(255,255,255,0.6); }
-
+        .footer { padding: 100px 0 40px; border-top: 1px solid rgba(255, 255, 255, 0.1); background: var(--charcoal); color: var(--white); }
+        .footer-top { display: flex; justify-content: space-between; margin-bottom: 100px; }
+        .footer-logo { font-weight: 900; font-size: 32px; letter-spacing: -0.05em; }
+        .footer-logo span { color: var(--brand); }
+        .footer-tagline { font-weight: 800; font-size: 12px; margin-top: 8px; opacity: 0.3; }
+        
+        .footer-links { display: flex; gap: 80px; }
+        .footer-col { display: flex; flex-direction: column; gap: 16px; }
+        .footer-col h4 { font-size: 11px; letter-spacing: 0.1em; opacity: 0.4; }
+        .footer-col a { font-size: 12px; font-weight: 800; text-decoration: none; color: var(--white); transition: opacity 0.3s; }
+        .footer-col a:hover { color: var(--brand); opacity: 1; }
+        
+        .footer-bottom { font-size: 10px; font-weight: 400; opacity: 0.4; letter-spacing: 0.05em; }
+        
         @media (max-width: 768px) {
-          .footer-cols { gap: 32px; }
-          .footer-bottom { flex-direction: column; align-items: flex-start; }
+          .footer-top { flex-direction: column; gap: 60px; }
+          .footer-links { gap: 40px; }
         }
       `}</style>
     </footer>

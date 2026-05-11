@@ -1,92 +1,139 @@
-import { useState, useEffect, useRef } from 'react';
+import medeaseUI from '../assets/medease/Screenshot 2026-03-17 081641.png';
 
-const projects = [
-  { title: 'RetailEdge Store', cat: 'web', label: 'E-Commerce', stat: '300% organic traffic in 60 days', bg: 'linear-gradient(135deg, #1e3a8a, #3b82f6)' },
-  { title: 'FinTrack Dashboard', cat: 'ai', label: 'SaaS + AI', stat: 'AI saves 20hrs/week for their team', bg: 'linear-gradient(135deg, #0c0f17, #334155)' },
-  { title: 'StyleNest Rebrand', cat: 'web', label: 'Web Dev', stat: '4.8s → 0.9s load time achieved', bg: 'linear-gradient(135deg, #4c1d95, #7c3aed)' },
-  { title: 'GrowthBase CRM', cat: 'ai', label: 'AI Automation', stat: '60% task reduction via n8n flows', bg: 'linear-gradient(135deg, #065f46, #10b981)' },
-  { title: 'SwiftBuild Portal', cat: 'web', label: 'Web App', stat: 'Full web app built in 3 weeks', bg: 'linear-gradient(135deg, #78350f, #d97706)' },
-  { title: 'NovaMart Launch', cat: 'ecommerce', label: 'E-Commerce', stat: '₹2Cr revenue in first quarter', bg: 'linear-gradient(135deg, #0f172a, #475569)' },
-];
+const medEase = {
+  title: 'MEDEASE',
+  label: 'AI PHARMACY AUTOMATION',
+  stat: 'GEMINI PRO VISION',
+  description: 'Streamlining pharmacy workflows with LLM-powered prescription parsing and intelligent inventory management.',
+  stack: ['React', 'FastAPI', 'Gemini', 'PostgreSQL'],
+  link: 'https://med-ease-khaki-xi.vercel.app/'
+};
 
-const filters = [
-  { id: 'all', label: 'All' },
-  { id: 'web', label: 'Web Dev' },
-  { id: 'ai', label: 'AI Automation' },
-  { id: 'ecommerce', label: 'E-Commerce' },
-];
+const ExternalIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+    <polyline points="15 3 22 3 22 10" />
+    <line x1="10" y1="14" x2="22" y2="2" />
+  </svg>
+);
 
 export default function Portfolio() {
-  const [filter, setFilter] = useState('all');
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-    }, { threshold: 0.1 });
-    if (ref.current) obs.observe(ref.current);
-    return () => { if (ref.current) obs.unobserve(ref.current); };
-  }, []);
-
-  const filtered = filter === 'all' ? projects : projects.filter(p => p.cat === filter);
-
   return (
-    <section id="portfolio" className="section section-muted">
-      <div className="container reveal" ref={ref}>
-        <span className="eyebrow">Our work</span>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '48px', flexWrap: 'wrap', gap: '24px' }}>
-          <h2 style={{ maxWidth: '500px' }}>Work that speaks for itself</h2>
-          <div className="port-filters">
-            {filters.map(f => (
-              <button key={f.id} className={`port-filter ${filter === f.id ? 'port-filter--active' : ''}`} onClick={() => setFilter(f.id)}>
-                {f.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="port-grid">
-          {filtered.map((p, i) => (
-            <a key={i} href="#" className="port-card">
-              <div className="port-img" style={{ background: p.bg }} />
-              <div className="port-info">
-                <span className="port-label">{p.label}</span>
-                <h3 className="port-title">{p.title}</h3>
-                <p className="port-stat">{p.stat}</p>
+    <section id="portfolio" className="port-viewport theme--light">
+      <div className="container port-container">
+        <div className="port-content-wrapper">
+          <span className="port-sub">CASE STUDY (01)</span>
+          
+          <div className="port-main-card">
+            <div className="card-info">
+              <div className="card-badge">{medEase.label}</div>
+              <h2 className="card-headline">{medEase.title}</h2>
+              <p className="card-summary">{medEase.description}</p>
+              
+              <div className="card-meta">
+                <div className="meta-item">
+                  <span className="meta-label">CORE ENGINE</span>
+                  <span className="meta-value">{medEase.stat}</span>
+                </div>
+                <div className="meta-item">
+                  <span className="meta-label">TECH STACK</span>
+                  <div className="stack-list">
+                    {medEase.stack.map((s, i) => <span key={i}>{s}</span>)}
+                  </div>
+                </div>
               </div>
-            </a>
-          ))}
+
+              <a href={medEase.link} target="_blank" rel="noopener noreferrer" className="port-link">
+                EXPLORE LIVE PROJECT <ExternalIcon />
+              </a>
+            </div>
+            
+            <div className="card-visual-simple">
+               <div className="visual-inner">
+                  <img 
+                    src={medeaseUI} 
+                    alt="MedEase Interface" 
+                  />
+                  <div className="visual-overlay" />
+               </div>
+            </div>
+          </div>
         </div>
       </div>
 
       <style>{`
-        .port-filters { display: flex; gap: 4px; }
-        .port-filter {
-          padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 500;
-          color: var(--text-secondary); background: transparent; border: none;
-          transition: all 0.2s; cursor: pointer;
+        .port-viewport {
+          height: 100vh;
+          width: 100%;
+          background: var(--white);
+          display: flex;
+          align-items: center;
+          position: relative;
+          z-index: 10;
+          overflow: hidden;
         }
-        .port-filter:hover { color: var(--text); }
-        .port-filter--active { background: var(--text); color: #fff; }
+        
+        .port-container { width: 100%; }
+        .port-content-wrapper { max-width: 1100px; margin: 0 auto; }
+        
+        .port-sub { font-size: 11px; letter-spacing: 0.3em; color: var(--charcoal); opacity: 0.3; display: block; margin-bottom: 40px; }
 
-        .port-grid {
-          display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px;
+        .port-main-card {
+          display: grid;
+          grid-template-columns: 1.2fr 1fr;
+          gap: 60px;
+          align-items: center;
+          background: #f8f8f8;
+          border: 1px solid rgba(0,0,0,0.05);
+          padding: 60px;
+          position: relative;
         }
-        .port-card {
-          display: block; border-radius: var(--radius); overflow: hidden;
-          background: #fff; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .port-card:hover { transform: translateY(-6px); }
-        .port-img { aspect-ratio: 16/10; }
-        .port-info { padding: 28px 28px 32px; }
-        .port-label {
-          font-size: 12px; font-weight: 600; color: var(--accent);
-          letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 8px;
-        }
-        .port-title { font-size: 22px; margin-bottom: 8px; }
-        .port-stat { font-size: 14px; color: var(--text-secondary); }
 
-        @media (max-width: 768px) { .port-grid { grid-template-columns: 1fr; } }
+        .card-badge { 
+          font-size: 10px; font-weight: 800; color: var(--brand); 
+          letter-spacing: 0.1em; margin-bottom: 24px;
+        }
+
+        .card-headline { 
+          font-family: 'american-typewriter', serif; 
+          font-size: clamp(48px, 8vw, 110px); 
+          line-height: 0.85; margin-bottom: 24px;
+          font-weight: 250;
+          color: var(--charcoal);
+        }
+
+        .card-summary { font-size: 18px; line-height: 1.5; color: var(--charcoal); opacity: 0.6; margin-bottom: 48px; max-width: 500px; }
+
+        .card-meta { display: flex; gap: 48px; margin-bottom: 56px; }
+        .meta-label { font-size: 10px; font-weight: 900; color: var(--charcoal); opacity: 0.3; display: block; margin-bottom: 8px; letter-spacing: 0.1em; }
+        .meta-value { font-size: 14px; font-weight: 700; color: var(--charcoal); }
+        .stack-list { display: flex; gap: 12px; font-size: 12px; font-weight: 700; color: var(--charcoal); opacity: 0.7; }
+
+        .port-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 16px;
+          color: var(--charcoal);
+          text-decoration: none;
+          font-size: 12px;
+          font-weight: 800;
+          letter-spacing: 0.1em;
+          padding-bottom: 4px;
+          border-bottom: 2px solid var(--brand);
+          transition: 0.3s;
+        }
+        .port-link:hover { color: var(--brand); border-color: var(--charcoal); }
+
+        .card-visual-simple { position: relative; width: 100%; aspect-ratio: 4/3; }
+        .visual-inner { width: 100%; height: 100%; border-radius: 4px; overflow: hidden; position: relative; box-shadow: 0 30px 60px rgba(0,0,0,0.1); }
+        .visual-inner img { width: 100%; height: 100%; object-fit: cover; opacity: 1; }
+        .visual-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(255,255,255,0.8), transparent 80%); }
+
+        @media (max-width: 1024px) {
+          .port-main-card { grid-template-columns: 1fr; padding: 40px; gap: 40px; }
+          .card-visual-simple { display: none; }
+          .port-viewport { height: auto; padding: 100px 0; }
+        }
       `}</style>
     </section>
   );

@@ -1,47 +1,55 @@
-import { useState, useEffect } from 'react';
-
-const phrases = ['Grow your business.', 'Drive real results.', 'Run on automation.'];
+import { useEffect, useRef, useState } from 'react';
+import WireframeGlobe from './WireframeGlobe';
 
 export default function Hero() {
-  const [idx, setIdx] = useState(0);
-  const [visible, setVisible] = useState(true);
+  const ref = useRef(null);
+  const slogans = [
+    "grow your business",
+    "run on automation",
+    "drive real result"
+  ];
+  const [index, setIndex] = useState(0);
+  const [fade, setFade] = useState(true);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setVisible(false);
+    const sloganInterval = setInterval(() => {
+      setFade(false); // Start fade out
       setTimeout(() => {
-        setIdx(prev => (prev + 1) % phrases.length);
-        setVisible(true);
-      }, 400);
-    }, 3500);
-    return () => clearInterval(interval);
-  }, []);
+        setIndex((prev) => (prev + 1) % slogans.length);
+        setFade(true); // Start fade in
+      }, 500); // Wait for fade out to complete
+    }, 3000); // Change every 3 seconds
+
+    return () => clearInterval(sloganInterval);
+  }, [slogans.length]);
 
   return (
-    <section className="hero">
-      <video autoPlay loop muted playsInline className="hero-bg-video">
-        <source src="/landingpage-bg.mp4" type="video/mp4" />
-      </video>
-      <div className="container hero-inner">
+    <section className="hero theme--dark">
+      <div style={{ 
+        position: 'absolute', 
+        inset: 0, 
+        zIndex: 0,
+        pointerEvents: 'none'
+      }}>
+        <WireframeGlobe />
+      </div>
+      <div className="container hero-inner" ref={ref}>
         <div className="hero-content">
-          <h1 className="hero-title" style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-            <span style={{ fontSize: '24px', fontWeight: 500, marginBottom: '12px', display: 'block', color: 'rgba(255,255,255,1)', letterSpacing: '4px', textTransform: 'uppercase' }}>We build digital experiences that</span>
-            <span style={{ display: 'block', minHeight: '80px' }}>
-              <span className={`hero-phrase ${visible ? 'hero-phrase--in' : 'hero-phrase--out'}`}>
-                {phrases[idx]}
-              </span>
+          <span className="subheading" style={{ fontSize: '14px', letterSpacing: '0.2em', marginBottom: '24px', display: 'block', color: 'rgba(255,255,255,0.6)' }}>
+            AI-POWERED DIGITAL SOLUTIONS
+          </span>
+          <h1 className="hero-title">
+            <span className={`slogan-fade ${fade ? 'fade-in' : 'fade-out'}`}>
+              {slogans[index]}
             </span>
           </h1>
-          <p className="hero-sub">
-            Globlyn helps businesses transform digitally — through blazing-fast websites,
-            intelligent AI automation, and performance-driven strategies that turn visitors
-            into customers.
+          <p className="hero-desc">
+            Globlyn helps modern brands scale through high-performance engineering, 
+            intelligent AI automation, and pixel-perfect design.
           </p>
           <div className="hero-actions">
-            <a href="#contact" className="btn btn-white">Let's talk</a>
-            <a href="#portfolio" className="btn-link" style={{ color: 'rgba(255,255,255,0.6)' }}>
-              View our work
-            </a>
+            <a href="#contact" className="btn">LET'S TALK</a>
+            <a href="#portfolio" className="hero-secondary">VIEW OUR WORK</a>
           </div>
         </div>
       </div>
@@ -49,49 +57,48 @@ export default function Hero() {
       <style>{`
         .hero {
           min-height: 100vh;
-          background: var(--bg-dark);
           display: flex; align-items: center; justify-content: center;
-          padding: 120px 0 80px;
-          position: relative;
+          padding-top: 100px;
+          position: sticky;
+          top: 0;
+          z-index: 1;
           overflow: hidden;
+          background: var(--charcoal);
         }
-        .hero-bg-video {
-          position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-          object-fit: cover; z-index: 0; opacity: 0.7;
+        .hero-inner { width: 100%; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 10; }
+        .hero-content { width: 100%; max-width: 1000px; text-align: center; }
+        
+        .hero-title { 
+          font-family: 'american-typewriter', serif;
+          font-size: clamp(48px, 10vw, 130px); 
+          line-height: 0.85; 
+          margin-bottom: 40px; 
+          color: var(--white);
+          min-height: 1.2em; /* Prevent layout jump */
+          text-transform: uppercase;
+          font-weight: 250;
         }
-        .hero::before {
-          content: '';
-          position: absolute; top: -50%; right: -20%;
-          width: 800px; height: 800px;
-          background: radial-gradient(circle, rgba(22,86,213,0.12) 0%, transparent 70%);
-          pointer-events: none;
-        }
-        .hero-inner {
-          position: relative; z-index: 1;
-          display: flex; flex-direction: column; gap: 80px;
-          align-items: center;
-        }
-        .hero-content { width: 100%; max-width: 800px; display: flex; flex-direction: column; align-items: center; text-align: center; }
-        .hero h1 { color: #fff; margin-bottom: 28px; text-shadow: 0 4px 24px rgba(0,0,0,0.6); }
-        .hero-phrase {
-          color: var(--accent-light);
-          display: inline-block;
-          transition: opacity 0.4s, transform 0.4s;
-          text-shadow: 0 4px 24px rgba(0,0,0,0.6);
-        }
-        .hero-phrase--in { opacity: 1; transform: translateY(0); }
-        .hero-phrase--out { opacity: 0; transform: translateY(12px); }
-        .hero-sub {
-          font-size: 18px; color: rgba(255,255,255,0.85);
-          max-width: 560px; line-height: 1.8;
-          margin-bottom: 40px; font-weight: 400;
-          text-shadow: 0 2px 12px rgba(0,0,0,0.8);
-        }
-        .hero-actions { display: flex; align-items: center; gap: 32px; justify-content: center; }
 
-        @media (max-width: 768px) {
-          .hero { padding: 100px 0 60px; }
-          .hero-actions { flex-direction: column; align-items: center; gap: 20px; }
+        .slogan-fade {
+          display: inline-block;
+          transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+        .fade-in {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .fade-out {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+
+        .hero-desc { font-size: clamp(16px, 2vw, 20px); max-width: 600px; margin: 0 auto 56px; color: rgba(255, 255, 255, 0.6); }
+        .hero-actions { display: flex; align-items: center; gap: 40px; justify-content: center; }
+        .hero-secondary { font-size: 12px; font-weight: 800; color: var(--white); text-decoration: underline; letter-spacing: 0.1em; transition: opacity 0.3s; }
+        .hero-secondary:hover { opacity: 0.5; }
+        @media (max-width: 768px) { 
+          .hero-actions { flex-direction: column; gap: 24px; } 
+          .hero-title { font-size: 42px; }
         }
       `}</style>
     </section>

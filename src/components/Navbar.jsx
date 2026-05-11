@@ -1,110 +1,107 @@
 import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
-export default function Navbar() {
+export default function Navbar({ themeOverride }) {
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [theme, setTheme] = useState('light');
+  const location = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 50);
 
-  const links = [
-    { label: 'Services', href: '#services' },
-    { label: 'Work', href: '#portfolio' },
-    { label: 'About', href: '#about' },
-  ];
+      // Detect theme of current section
+      const sections = document.querySelectorAll('section, .theme--light, .theme--dark, .marquee, .slogan-outer-wrapper');
+      let currentTheme = 'light';
+
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        // If section is covering the top part of the viewport
+        if (rect.top <= 90 && rect.bottom >= 90) {
+          if (section.classList.contains('theme--dark') || section.classList.contains('slogan-outer-wrapper') || section.classList.contains('cta-box')) {
+            currentTheme = 'dark';
+          } else if (section.classList.contains('marquee')) {
+            currentTheme = 'brand'; // Special brand theme for marquee
+          } else {
+            currentTheme = 'light';
+          }
+        }
+      });
+      setTheme(currentTheme);
+    };
+
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [location]);
 
   return (
-    <>
-      <nav className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
-        <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '100%' }}>
-          <a href="#" className="nav-logo">
-            Globlyn<span>.</span>
-          </a>
-          <div className="nav-links">
-            {links.map(l => (
-              <a key={l.href} href={l.href} className="nav-link">{l.label}</a>
-            ))}
-          </div>
-          <a href="#contact" className="btn btn-solid nav-cta">Send request</a>
-          <button className="nav-toggle" onClick={() => setMenuOpen(true)} aria-label="Menu">
-            <span /><span /><span />
-          </button>
-        </div>
-      </nav>
+    <nav className={`nav nav--${themeOverride || theme} ${scrolled ? 'nav--scrolled' : ''}`}>
+      <div className="nav-container">
+        <Link to="/" className="nav-logo">
+          GLOBLYN<span>.</span>
+        </Link>
 
-      {menuOpen && (
-        <div className="mobile-menu">
-          <button className="mobile-close" onClick={() => setMenuOpen(false)}>✕</button>
-          {links.map(l => (
-            <a key={l.href} href={l.href} className="mobile-link" onClick={() => setMenuOpen(false)}>{l.label}</a>
-          ))}
-          <a href="#contact" className="btn btn-solid" onClick={() => setMenuOpen(false)} style={{ marginTop: '16px' }}>Send request</a>
+        <div className="nav-links">
+          <Link to="/#services" className="nav-link">WHAT WE DO</Link>
+          <Link to="/about" className="nav-link">ABOUT</Link>
+          <a href="#contact" className="nav-cta">SEND REQUEST</a>
         </div>
-      )}
+      </div>
 
       <style>{`
         .nav {
-          position: fixed; top: 24px; left: 0; right: 0; z-index: 1000;
-          height: 72px;
+          position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+          height: 90px; display: flex; align-items: center;
+          transition: all 0.4s var(--transition);
           background: transparent;
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .nav--scrolled {
-          top: 0;
-          background: rgba(255,255,255,0.97);
-          backdrop-filter: blur(16px);
-          border-bottom: 1px solid var(--border);
+          height: 70px;
+          background: var(--nav-bg, transparent);
+          backdrop-filter: blur(10px);
+          border-bottom: 1px solid var(--nav-border, rgba(0, 0, 0, 0));
         }
+
+        /* Dynamic Theme Colors */
+        .nav--light { --nav-bg: rgba(255, 255, 255, 0.8); --nav-border: rgba(31, 30, 29, 0.05); --nav-text: var(--charcoal); }
+        .nav--dark { --nav-bg: rgba(0, 0, 0, 0); --nav-border: rgba(255, 255, 255, 0.1); --nav-text: var(--white); }
+        .nav--brand { --nav-bg: rgba(248, 69, 37, 0.8); --nav-border: rgba(255, 255, 255, 0.2); --nav-text: var(--white); }
+
+        .nav-container { width: 100%; padding: 0 60px; display: flex; justify-content: space-between; align-items: center; }
+        
         .nav-logo {
-          font-weight: 800; font-size: 22px; letter-spacing: -1px;
-          color: #fff;
-          transition: color 0.3s;
+          font-weight: 900; font-size: 24px; letter-spacing: -0.05em;
+          color: var(--nav-text); text-decoration: none; transition: color 0.3s;
         }
-        .nav--scrolled .nav-logo { color: var(--text); }
-        .nav-logo span { color: var(--accent); }
+        .nav-logo span { color: var(--brand); }
+        .nav--brand .nav-logo span { color: var(--white); }
 
-        .nav-links { display: flex; gap: 36px; }
+        .nav-links { display: flex; gap: 48px; align-items: center; }
         .nav-link {
-          font-size: 14px; font-weight: 500;
-          color: rgba(255,255,255,0.7);
-          transition: color 0.2s;
+          font-size: 12px; font-weight: 400; color: var(--nav-text);
+          text-decoration: none; letter-spacing: 0.1em;
+          transition: all 0.3s;
         }
-        .nav-link:hover { color: #fff; }
-        .nav--scrolled .nav-link { color: var(--text-secondary); }
-        .nav--scrolled .nav-link:hover { color: var(--text); }
+        .nav-link:hover { opacity: 0.5; }
+        
+        .nav-cta {
+          font-size: 12px; font-weight: 800; color: var(--white);
+          background: var(--brand); border: 1.5px solid var(--brand); padding: 10px 24px;
+          text-decoration: none; letter-spacing: 0.05em;
+          transition: all 0.3s;
+        }
+        .nav-cta:hover { background: transparent; color: var(--nav-text); }
+        .nav--brand .nav-cta { background: var(--white); color: var(--brand); border-color: var(--white); }
 
-        .nav-cta { padding: 10px 24px; font-size: 13px; }
-
-        .nav-toggle {
-          display: none; flex-direction: column; gap: 5px; padding: 4px;
+        @media (max-width: 1024px) {
+          .nav-container { padding: 0 30px; }
+          .nav-links { gap: 24px; }
         }
-        .nav-toggle span {
-          display: block; width: 24px; height: 2px;
-          background: #fff; transition: background 0.3s;
-        }
-        .nav--scrolled .nav-toggle span { background: var(--text); }
-
-        .mobile-menu {
-          position: fixed; inset: 0; z-index: 2000;
-          background: var(--bg-dark);
-          display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px;
-        }
-        .mobile-close {
-          position: absolute; top: 24px; right: 24px;
-          color: #fff; font-size: 28px; background: none; border: none;
-        }
-        .mobile-link {
-          font-size: 28px; font-weight: 700; color: #fff; letter-spacing: -1px;
-        }
-
-        @media (max-width: 900px) {
-          .nav-links, .nav-cta { display: none !important; }
-          .nav-toggle { display: flex !important; }
+        @media (max-width: 768px) {
+          .nav-links { display: none; }
         }
       `}</style>
-    </>
+    </nav>
   );
 }

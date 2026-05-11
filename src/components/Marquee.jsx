@@ -1,30 +1,34 @@
 export default function Marquee() {
-  const logos = ['RetailEdge', 'StyleNest', 'FinTrack', 'GrowthBase', 'TechCore', 'SwiftBuild', 'NovaMart', 'DigitalFirst'];
+  const logos = ['RETAILEDGE', 'STYLENEST', 'FINTRACK', 'GROWTHBASE', 'TECHCORE', 'SWIFTBUILD', 'NOVAMART', 'DIGITALFIRST'];
 
   return (
-    <section style={{ padding: '48px 0', borderBottom: '1px solid var(--border)', overflow: 'hidden' }}>
-      <div className="container" style={{ marginBottom: '20px' }}>
-        <p style={{ fontSize: '12px', fontWeight: 500, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
-          Trusted by businesses across industries
-        </p>
-      </div>
+    <section className="marquee">
       <div style={{ overflow: 'hidden' }}>
         <div className="marquee-track">
-          {[...logos, ...logos].map((name, i) => (
+          {[...logos, ...logos, ...logos].map((name, i) => (
             <span key={i} className="marquee-item">{name}</span>
           ))}
         </div>
       </div>
       <style>{`
+        .marquee {
+          padding: 60px 0;
+          background: #F84525;
+          border-top: 1px solid rgba(255,255,255,0.1);
+          border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
         .marquee-track {
-          display: flex; gap: 48px; width: max-content;
-          animation: marquee 25s linear infinite;
+          display: flex; gap: 100px; width: max-content;
+          animation: marquee 40s linear infinite;
         }
         .marquee-item {
-          font-size: 16px; font-weight: 600; color: var(--text-muted);
-          white-space: nowrap; letter-spacing: -0.3px;
+          font-size: clamp(24px, 4vw, 40px);
+          font-weight: 800; color: var(--white);
+          white-space: nowrap; letter-spacing: -0.02em;
+          opacity: 0.3; transition: opacity 0.3s;
         }
-        @keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+        .marquee-item:hover { opacity: 1; }
+        @keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-33.33%) } }
       `}</style>
     </section>
   );

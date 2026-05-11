@@ -1,97 +1,126 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 
 const testimonials = [
-  { quote: 'Globlyn transformed our outdated website into a conversion machine. Within 30 days of launch, our leads doubled. Their AI chatbot alone saves us 20+ hours a week in customer support.', name: 'Rahul K.', role: 'CEO, RetailEdge India' },
-  { quote: 'From strategy to launch in 3 weeks. Globlyn understood our vision immediately. The AI automation they built cut our order processing time by 60%. Exceptional work.', name: 'Priya M.', role: 'Founder, StyleNest' },
-  { quote: 'We needed a tech partner who could move fast and think big. Globlyn delivered a custom web app and AI workflow in under 4 weeks. Genuinely impressed.', name: 'Arjun J.', role: 'CTO, FinTrack Solutions' },
-  { quote: 'Their attention to detail is extraordinary. Our website ranks on page 1 of Google for all main keywords. The SEO + design combo is brilliant and worth every rupee.', name: 'Sneha M.', role: 'Marketing Head, GrowthBase' },
+  { quote: 'Globlyn transformed our outdated website into a conversion machine. Within 30 days of launch, our leads doubled.', name: 'RAHUL K.', role: 'CEO, RETAILEDGE' },
+  { quote: 'From strategy to launch in 3 weeks. Globlyn understood our vision immediately. Exceptional work.', name: 'PRIYA M.', role: 'FOUNDER, STYLENEST' },
+  { quote: 'We needed a partner who could move fast. Globlyn delivered a custom web app in under 4 weeks.', name: 'ARJUN J.', role: 'CTO, FINTRACK' },
+  { quote: 'Their attention to detail is extraordinary. The SEO + design combo is brilliant.', name: 'SNEHA M.', role: 'MARKETING HEAD, GROWTHBASE' },
 ];
 
+const ArrowLeft = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+);
+
+const ArrowRight = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+);
+
 export default function Testimonials() {
-  const [idx, setIdx] = useState(0);
-  const [fading, setFading] = useState(false);
-  const ref = useRef(null);
+  const [index, setIndex] = useState(0);
 
-  const goTo = (next) => {
-    setFading(true);
-    setTimeout(() => { setIdx(next); setFading(false); }, 300);
-  };
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-    }, { threshold: 0.1 });
-    if (ref.current) obs.observe(ref.current);
-    return () => { if (ref.current) obs.unobserve(ref.current); };
-  }, []);
-
-  const t = testimonials[idx];
+  const next = () => setIndex((prev) => (prev + 1) % testimonials.length);
+  const prev = () => setIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
 
   return (
-    <section className="section" style={{ background: 'var(--bg)' }}>
-      <div className="container reveal" ref={ref}>
-        <span className="eyebrow">Testimonials</span>
-        <h2 style={{ maxWidth: '500px', marginBottom: '64px' }}>Our clients say it best</h2>
+    <section className="section theme--light testi-viewport">
+      <div className="container">
+        <div className="testi-header">
+          <span className="testi-sub">TESTIMONIALS</span>
+          <h2 className="testi-title">Words from our clients</h2>
+        </div>
 
-        <div className="testi-wrap">
-          <div className={`testi-content ${fading ? 'testi--fade' : ''}`}>
-            <blockquote className="testi-quote">"{t.quote}"</blockquote>
-            <div className="testi-author">
-              <div className="testi-avatar">{t.name.split(' ').map(n => n[0]).join('')}</div>
-              <div>
-                <div className="testi-name">{t.name}</div>
-                <div className="testi-role">{t.role}</div>
-              </div>
+        <div className="testi-slider">
+          <div className="testi-content">
+            <p className="testi-quote" key={index}>
+              "{testimonials[index].quote}"
+            </p>
+            <div className="testi-meta">
+              <span className="testi-name">{testimonials[index].name}</span>
+              <span className="testi-role">{testimonials[index].role}</span>
             </div>
           </div>
 
           <div className="testi-nav">
-            <button onClick={() => goTo((idx - 1 + testimonials.length) % testimonials.length)} className="testi-arr">←</button>
-            <span className="testi-count">{idx + 1} / {testimonials.length}</span>
-            <button onClick={() => goTo((idx + 1) % testimonials.length)} className="testi-arr">→</button>
+            <button onClick={prev} className="nav-btn" aria-label="Previous testimonial">
+              <ArrowLeft />
+            </button>
+            <div className="nav-dots">
+              {testimonials.map((_, i) => (
+                <span key={i} className={`nav-dot ${i === index ? 'active' : ''}`} onClick={() => setIndex(i)} />
+              ))}
+            </div>
+            <button onClick={next} className="nav-btn" aria-label="Next testimonial">
+              <ArrowRight />
+            </button>
           </div>
         </div>
       </div>
 
       <style>{`
-        .testi-wrap {
-          max-width: 720px;
+        .testi-viewport {
+          padding: 120px 0;
+          background: var(--white);
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
-        .testi-content {
-          transition: opacity 0.3s, transform 0.3s;
+
+        .testi-header { margin-bottom: 80px; }
+        .testi-sub { font-size: 11px; font-weight: 800; letter-spacing: 0.3em; color: var(--brand); display: block; margin-bottom: 16px; }
+        .testi-title { 
+          font-family: 'american-typewriter', serif;
+          font-size: 56px; font-weight: 250; letter-spacing: -0.02em; 
+          line-height: 0.9;
+          color: var(--charcoal);
         }
-        .testi--fade { opacity: 0; transform: translateY(8px); }
+
+        .testi-slider {
+          max-width: 800px;
+          min-height: 400px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+
         .testi-quote {
-          font-size: 24px; font-weight: 400; line-height: 1.6;
-          color: var(--text); letter-spacing: -0.3px;
-          margin-bottom: 32px;
+          font-size: clamp(24px, 4vw, 36px);
+          font-weight: 400;
+          line-height: 1.4;
+          margin-bottom: 40px;
+          color: var(--charcoal);
+          opacity: 0.9;
+          animation: fadeSlide 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .testi-author { display: flex; align-items: center; gap: 16px; }
-        .testi-avatar {
-          width: 48px; height: 48px; border-radius: 50%;
-          background: var(--bg-dark); color: #fff;
+
+        @keyframes fadeSlide {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        .testi-meta { display: flex; flex-direction: column; gap: 4px; margin-bottom: 60px; }
+        .testi-name { font-size: 16px; font-weight: 700; color: var(--charcoal); }
+        .testi-role { font-size: 12px; font-weight: 400; color: var(--charcoal); opacity: 0.5; letter-spacing: 0.05em; }
+
+        .testi-nav { display: flex; align-items: center; gap: 32px; }
+        .nav-btn {
+          background: none; border: 1px solid rgba(0,0,0,0.1); 
+          color: var(--charcoal); width: 50px; height: 50px; border-radius: 50%;
           display: flex; align-items: center; justify-content: center;
-          font-weight: 700; font-size: 14px;
+          cursor: pointer; transition: all 0.3s;
         }
-        .testi-name { font-weight: 600; font-size: 15px; }
-        .testi-role { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+        .nav-btn:hover { border-color: var(--brand); color: var(--brand); }
+        
+        .nav-dots { display: flex; gap: 12px; }
+        .nav-dot {
+          width: 6px; height: 6px; border-radius: 50%;
+          background: rgba(0,0,0,0.1); cursor: pointer; transition: 0.3s;
+        }
+        .nav-dot.active { background: var(--brand); transform: scale(1.5); }
 
-        .testi-nav {
-          display: flex; align-items: center; gap: 16px;
-          margin-top: 48px; padding-top: 24px;
-          border-top: 1px solid var(--border);
+        @media (max-width: 768px) {
+          .testi-title { font-size: 32px; }
+          .testi-quote { font-size: 20px; }
+          .testi-nav { gap: 24px; }
+          .nav-btn { width: 44px; height: 44px; }
         }
-        .testi-arr {
-          width: 40px; height: 40px; border-radius: 50%;
-          border: 1px solid var(--border); display: flex;
-          align-items: center; justify-content: center;
-          font-size: 16px; transition: all 0.2s;
-          color: var(--text);
-        }
-        .testi-arr:hover { border-color: var(--text); background: var(--text); color: #fff; }
-        .testi-count { font-size: 13px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
-
-        @media (max-width: 768px) { .testi-quote { font-size: 18px; } }
       `}</style>
     </section>
   );
