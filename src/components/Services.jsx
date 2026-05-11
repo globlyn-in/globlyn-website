@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ScrollReveal from './ScrollReveal';
 
 const services = [
   { title: 'WEB DEVELOPMENT', desc: 'Custom websites built for speed, SEO, and conversion. From landing pages to full-stack web applications.' },
@@ -13,25 +14,31 @@ export default function Services() {
   return (
     <section id="services" className="section theme--dark">
       <div className="container">
-        <span className="subheading" style={{ fontSize: '12px', letterSpacing: '0.2em', marginBottom: '32px', display: 'block' }}>
-          CORE SERVICES
-        </span>
-        <h2 className="section-title" style={{ maxWidth: '900px', marginBottom: '80px', fontSize: 'clamp(40px, 6vw, 80px)', lineHeight: 0.9, fontFamily: 'american-typewriter, serif', fontWeight: 250 }}>
-          WE HELP BRANDS<br />DOMINATE DIGITAL.
-        </h2>
+        <ScrollReveal delay={100}>
+          <span className="subheading" style={{ fontSize: '12px', letterSpacing: '0.2em', marginBottom: '32px', display: 'block' }}>
+            CORE SERVICES
+          </span>
+        </ScrollReveal>
+        <ScrollReveal delay={200}>
+          <h2 className="section-title" style={{ maxWidth: '900px', marginBottom: '80px', fontSize: 'clamp(40px, 6vw, 80px)', lineHeight: 0.9, fontFamily: 'american-typewriter, serif', fontWeight: 250 }}>
+            WE HELP BRANDS<br />DOMINATE DIGITAL.
+          </h2>
+        </ScrollReveal>
 
         <div className="svc-list">
           {services.map((s, i) => (
-            <div key={i} className={`svc-row ${active === i ? 'svc-row--open' : ''}`}>
-              <button className="svc-header" onClick={() => setActive(active === i ? null : i)}>
-                <span className="svc-num">0{i + 1}</span>
-                <h3 className="svc-title">{s.title}</h3>
-                <span className="svc-toggle">{active === i ? '−' : '+'}</span>
-              </button>
-              <div className="svc-body" style={{ maxHeight: active === i ? '200px' : '0' }}>
-                <p className="svc-desc">{s.desc}</p>
+            <ScrollReveal key={i} delay={100 * (i + 1)}>
+              <div className={`svc-row ${active === i ? 'svc-row--open' : ''}`}>
+                <button className="svc-header" onClick={() => setActive(active === i ? null : i)}>
+                  <span className="svc-num">0{i + 1}</span>
+                  <h3 className="svc-title">{s.title}</h3>
+                  <span className="svc-toggle">{active === i ? '−' : '+'}</span>
+                </button>
+                <div className="svc-body" style={{ maxHeight: active === i ? '200px' : '0' }}>
+                  <p className="svc-desc">{s.desc}</p>
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>

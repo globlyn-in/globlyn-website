@@ -1,13 +1,15 @@
+import ScrollReveal from './ScrollReveal';
+
 export default function Footer() {
   return (
     <footer className="footer theme--dark">
       <div className="container">
         <div className="footer-top">
-          <div className="footer-brand">
+          <ScrollReveal delay={100} className="footer-brand">
             <span className="footer-logo">GLOBLYN<span>.</span></span>
             <p className="footer-tagline">BUILD. AUTOMATE. GROW.</p>
-          </div>
-          <div className="footer-links">
+          </ScrollReveal>
+          <ScrollReveal delay={200} className="footer-links">
             <div className="footer-col">
               <h4>SOCIALS</h4>
               <a href="#">LINKEDIN</a>
@@ -19,11 +21,11 @@ export default function Footer() {
               <a href="#">PRIVACY</a>
               <a href="#">TERMS</a>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
-        <div className="footer-bottom">
+        <ScrollReveal delay={300} className="footer-bottom">
           <span>© 2026 GLOBLYN. ALL RIGHTS RESERVED.</span>
-        </div>
+        </ScrollReveal>
       </div>
       <style>{`
         .footer { padding: 100px 0 40px; border-top: 1px solid rgba(255, 255, 255, 0.1); background: var(--charcoal); color: var(--white); }

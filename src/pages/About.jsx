@@ -1,17 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import ScrollReveal from '../components/ScrollReveal';
 
 export default function About() {
-  const ref = useRef(null);
-  
   useEffect(() => {
     window.scrollTo(0, 0);
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) e.target.classList.add('visible');
-    }, { threshold: 0.1 });
-    if (ref.current) obs.observe(ref.current);
-    return () => { if (ref.current) obs.unobserve(ref.current); };
   }, []);
 
   return (
@@ -19,7 +13,7 @@ export default function About() {
       <Navbar />
       <main className="theme--light" style={{ paddingTop: '100px' }}>
         <section className="section">
-          <div className="container reveal" ref={ref}>
+          <ScrollReveal className="container">
             <span className="subheading" style={{ fontSize: '14px', letterSpacing: '0.2em', marginBottom: '32px', display: 'block' }}>
               WHO WE ARE
             </span>
@@ -56,22 +50,24 @@ export default function About() {
                 </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
         </section>
 
         <section className="section theme--dark">
           <div className="container">
-            <h2 style={{ marginBottom: '60px', fontSize: 'clamp(32px, 5vw, 64px)' }}>OUR VALUES.</h2>
+            <ScrollReveal delay={100}>
+              <h2 style={{ marginBottom: '60px', fontSize: 'clamp(32px, 5vw, 64px)' }}>OUR VALUES.</h2>
+            </ScrollReveal>
             <div className="values-grid">
               {[
                 { t: 'PRECISION', d: 'We believe in clean code, perfect pixels, and flawless execution.' },
                 { t: 'AUTOMATION', d: 'If a task is repetitive, it belongs to the machine. We free humans for high-value work.' },
                 { t: 'PARTNERSHIP', d: 'We are not a vendor; we are an extension of your team.' }
               ].map((v, i) => (
-                <div key={i} className="value-item">
+                <ScrollReveal key={i} delay={100 * (i + 1)} className="value-item">
                   <h3>{v.t}</h3>
                   <p>{v.d}</p>
-                </div>
+                </ScrollReveal>
               ))}
             </div>
           </div>

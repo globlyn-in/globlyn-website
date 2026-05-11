@@ -1,3 +1,5 @@
+import ScrollReveal from './ScrollReveal';
+
 const features = [
   'Free Strategy Consultation',
   'Custom AI Integration Roadmap',
@@ -17,7 +19,7 @@ export default function CTABanner() {
       <div className="container">
         <div className="cta-grid">
           
-          <div className="cta-content">
+          <ScrollReveal delay={100} className="cta-content">
             <span className="cta-sub">NEXT STEPS</span>
             <h2 className="cta-headline">
               READY TO<br />
@@ -36,13 +38,13 @@ export default function CTABanner() {
                 </div>
               ))}
             </div>
-          </div>
+          </ScrollReveal>
 
-          <div className="cta-portal">
+          <ScrollReveal delay={300} className="cta-portal">
             <div className="portal-box">
               <div className="portal-inner">
                 <p className="portal-hint">HAVE A PROJECT IN MIND?</p>
-                <a href="mailto:hello@globlyn.com" className="portal-link">
+                <a href="mailto:globlyn.in@gmail.com" className="portal-link">
                   LET'S TALK
                   <span className="portal-arrow">→</span>
                 </a>
@@ -51,7 +53,7 @@ export default function CTABanner() {
                 </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
         </div>
       </div>
@@ -146,8 +148,25 @@ export default function CTABanner() {
           .cta-perks { grid-template-columns: 1fr; }
         }
         @media (max-width: 768px) {
-          .portal-box { padding: 40px; }
-          .cta-headline { font-size: 60px; }
+          .cta-section { padding: 80px 0; }
+          .cta-grid { 
+            grid-template-columns: 1.1fr 0.9fr; 
+            gap: 20px; 
+          }
+          .cta-headline { font-size: 28px; margin-bottom: 20px; }
+          .cta-description { font-size: 14px; margin-bottom: 24px; max-width: 100%; }
+          .cta-perks { display: none; } /* Hide perks on very small screens to maintain layout */
+          .cta-sub { font-size: 10px; margin-bottom: 16px; }
+          
+          .portal-box { padding: 20px 15px; }
+          .portal-link { font-size: 24px; gap: 10px; margin-bottom: 20px; }
+          .portal-hint { font-size: 8px; }
+          .portal-footer { font-size: 8px; padding-top: 16px; }
+        }
+        @media (max-width: 480px) {
+          .cta-grid { gap: 15px; }
+          .cta-headline { font-size: 22px; }
+          .portal-link { font-size: 18px; }
         }
       `}</style>
     </section>

@@ -48,8 +48,9 @@ export default function Revealer() {
     currentTranslateY = -50 + (p * 50);
   }
 
-  const width = 35 + (ratioP * 65);
-  const height = 50 + (ratioP * 20);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const width = isMobile ? (60 + (ratioP * 40)) : (35 + (ratioP * 65));
+  const height = isMobile ? (40 + (ratioP * 30)) : (50 + (ratioP * 20));
 
   return (
     <div className="revealer-wrapper" ref={wrapperRef}>
@@ -126,7 +127,7 @@ export default function Revealer() {
 
       <style>{`
         .revealer-wrapper {
-          height: 600vh;
+          height: 300vh;
           background: var(--white);
           position: relative;
           z-index: 2;

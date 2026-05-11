@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import WireframeGlobe from './WireframeGlobe';
+import ScrollReveal from './ScrollReveal';
 
 export default function Hero() {
   const ref = useRef(null);
@@ -35,22 +36,30 @@ export default function Hero() {
       </div>
       <div className="container hero-inner" ref={ref}>
         <div className="hero-content">
-          <span className="subheading" style={{ fontSize: '14px', letterSpacing: '0.2em', marginBottom: '24px', display: 'block', color: 'rgba(255,255,255,0.6)' }}>
-            AI-POWERED DIGITAL SOLUTIONS
-          </span>
-          <h1 className="hero-title">
-            <span className={`slogan-fade ${fade ? 'fade-in' : 'fade-out'}`}>
-              {slogans[index]}
+          <ScrollReveal delay={100}>
+            <span className="subheading" style={{ fontSize: '14px', letterSpacing: '0.2em', marginBottom: '24px', display: 'block', color: 'rgba(255,255,255,0.6)' }}>
+              AI-POWERED DIGITAL SOLUTIONS
             </span>
-          </h1>
-          <p className="hero-desc">
-            Globlyn helps modern brands scale through high-performance engineering, 
-            intelligent AI automation, and pixel-perfect design.
-          </p>
-          <div className="hero-actions">
-            <a href="#contact" className="btn">LET'S TALK</a>
-            <a href="#portfolio" className="hero-secondary">VIEW OUR WORK</a>
-          </div>
+          </ScrollReveal>
+          <ScrollReveal delay={200}>
+            <h1 className="hero-title">
+              <span className={`slogan-fade ${fade ? 'fade-in' : 'fade-out'}`}>
+                {slogans[index]}
+              </span>
+            </h1>
+          </ScrollReveal>
+          <ScrollReveal delay={300}>
+            <p className="hero-desc">
+              Globlyn helps modern brands scale through high-performance engineering, 
+              intelligent AI automation, and pixel-perfect design.
+            </p>
+          </ScrollReveal>
+          <ScrollReveal delay={400}>
+            <div className="hero-actions">
+              <a href="#contact" className="btn">LET'S TALK</a>
+              <a href="#portfolio" className="hero-secondary">VIEW OUR WORK</a>
+            </div>
+          </ScrollReveal>
         </div>
       </div>
 

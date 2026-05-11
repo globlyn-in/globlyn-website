@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ScrollReveal from './ScrollReveal';
 
 const testimonials = [
   { quote: 'Globlyn transformed our outdated website into a conversion machine. Within 30 days of launch, our leads doubled.', name: 'RAHUL K.', role: 'CEO, RETAILEDGE' },
@@ -24,12 +25,12 @@ export default function Testimonials() {
   return (
     <section className="section theme--light testi-viewport">
       <div className="container">
-        <div className="testi-header">
+        <ScrollReveal delay={100} className="testi-header">
           <span className="testi-sub">TESTIMONIALS</span>
           <h2 className="testi-title">Words from our clients</h2>
-        </div>
+        </ScrollReveal>
 
-        <div className="testi-slider">
+        <ScrollReveal delay={200} className="testi-slider">
           <div className="testi-content">
             <p className="testi-quote" key={index}>
               "{testimonials[index].quote}"
@@ -53,7 +54,7 @@ export default function Testimonials() {
               <ArrowRight />
             </button>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
 
       <style>{`

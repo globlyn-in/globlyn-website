@@ -11,7 +11,6 @@ export default function WireframeGlobe() {
     let width, height;
     let cx, cy;
     
-    // Configuration
     const radius = 400; // Base radius of the globe
     const pointCount = 600; // Number of nodes
     const maxConnectionDistance = 85; // Distance to draw wireframe lines

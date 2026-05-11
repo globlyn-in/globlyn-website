@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import ScrollReveal from './ScrollReveal';
 
 const cards = [
   { 
@@ -109,22 +110,31 @@ function TiltCard({ card }) {
 export default function WhyGloblyn() {
   return (
     <section className="section theme--dark why-section">
-      <div className="container">
-        <div className="why-header">
+      <div className="container why-container">
+        <ScrollReveal delay={100} className="why-header">
           <span className="why-sub">ENGINEERING PRINCIPLES</span>
           <h2 className="why-headline">WHY WORK WITH US?</h2>
-        </div>
+        </ScrollReveal>
 
         <div className="why-grid">
           {cards.map((c, i) => (
-            <TiltCard key={i} card={c} />
+            <ScrollReveal key={i} delay={100 * (i + 1)}>
+              <TiltCard card={c} />
+            </ScrollReveal>
           ))}
         </div>
       </div>
 
       <style>{`
         .why-section { padding: 160px 0; background: var(--charcoal); overflow: hidden; }
-        .why-header { margin-bottom: 120px; text-align: center; }
+        .why-container {
+          display: grid;
+          grid-template-columns: 0.8fr 1.2fr;
+          gap: 80px;
+          align-items: flex-start;
+        }
+
+        .why-header { text-align: left; position: sticky; top: 160px; }
         .why-sub { font-size: 11px; font-weight: 900; color: var(--brand); letter-spacing: 0.4em; display: block; margin-bottom: 24px; }
         .why-headline { 
            font-family: 'american-typewriter', serif; 
@@ -136,7 +146,7 @@ export default function WhyGloblyn() {
 
         .why-grid {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
+          grid-template-columns: repeat(2, 1fr);
           gap: 1px;
           background: rgba(255,255,255,0.05);
           border: 1px solid rgba(255,255,255,0.05);
@@ -144,7 +154,7 @@ export default function WhyGloblyn() {
 
         .why-card {
           background: var(--charcoal);
-          padding: 60px 40px;
+          padding: 40px 30px;
           height: 100%;
           position: relative;
           overflow: hidden;
@@ -173,7 +183,7 @@ export default function WhyGloblyn() {
           position: absolute;
           top: -20px;
           right: -10px;
-          font-size: 180px;
+          font-size: 120px;
           font-weight: 900;
           color: rgba(255,255,255,0.02);
           line-height: 1;
@@ -193,19 +203,19 @@ export default function WhyGloblyn() {
 
         .card-title {
           font-family: 'american-typewriter', serif;
-          font-size: 36px;
+          font-size: 28px;
           font-weight: 250;
           color: var(--white);
-          margin-bottom: 24px;
+          margin-bottom: 16px;
           transition: 0.4s;
         }
         .why-card:hover .card-title { color: var(--brand); }
 
         .card-desc {
-          font-size: 15px;
-          line-height: 1.6;
+          font-size: 14px;
+          line-height: 1.5;
           color: rgba(255,255,255,0.5);
-          margin-bottom: 60px;
+          margin-bottom: 40px;
           transition: 0.4s;
           max-width: 90%;
         }
@@ -216,12 +226,25 @@ export default function WhyGloblyn() {
         .footer-line { height: 2px; width: 20px; background: var(--brand); transition: 0.4s; }
         .why-card:hover .footer-line { width: 40px; }
 
-        @media (max-width: 1200px) {
-          .why-grid { grid-template-columns: 1fr 1fr; }
+        @media (max-width: 1100px) {
+          .why-container { grid-template-columns: 1fr; gap: 60px; }
+          .why-header { position: static; text-align: center; }
         }
         @media (max-width: 768px) {
-          .why-grid { grid-template-columns: 1fr; }
-          .why-card { padding: 50px 30px; }
+          .why-section { padding: 80px 0; }
+          .why-grid { grid-template-columns: repeat(2, 1fr); }
+          .why-card { padding: 24px 16px; }
+          .card-title { font-size: 18px; margin-bottom: 8px; }
+          .card-desc { font-size: 11px; margin-bottom: 24px; }
+          .card-bg-index { font-size: 60px; }
+          .card-symbol svg { width: 24px; height: 24px; }
+          .card-visual-header { margin-bottom: 20px; }
+          .footer-status { font-size: 7px; }
+        }
+        @media (max-width: 480px) {
+           .why-card { padding: 16px 12px; }
+           .card-title { font-size: 16px; }
+           .card-desc { font-size: 10px; line-height: 1.4; }
         }
       `}</style>
     </section>

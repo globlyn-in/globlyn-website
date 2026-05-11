@@ -1,4 +1,5 @@
 import medeaseUI from '../assets/medease/Screenshot 2026-03-17 081641.png';
+import ScrollReveal from './ScrollReveal';
 
 const medEase = {
   title: 'MEDEASE',
@@ -22,10 +23,12 @@ export default function Portfolio() {
     <section id="portfolio" className="port-viewport theme--light">
       <div className="container port-container">
         <div className="port-content-wrapper">
-          <span className="port-sub">CASE STUDY (01)</span>
+          <ScrollReveal delay={100}>
+            <span className="port-sub">CASE STUDY (01)</span>
+          </ScrollReveal>
           
           <div className="port-main-card">
-            <div className="card-info">
+            <ScrollReveal delay={200} className="card-info">
               <div className="card-badge">{medEase.label}</div>
               <h2 className="card-headline">{medEase.title}</h2>
               <p className="card-summary">{medEase.description}</p>
@@ -46,9 +49,9 @@ export default function Portfolio() {
               <a href={medEase.link} target="_blank" rel="noopener noreferrer" className="port-link">
                 EXPLORE LIVE PROJECT <ExternalIcon />
               </a>
-            </div>
+            </ScrollReveal>
             
-            <div className="card-visual-simple">
+            <ScrollReveal delay={300} className="card-visual-simple">
                <div className="visual-inner">
                   <img 
                     src={medeaseUI} 
@@ -56,7 +59,7 @@ export default function Portfolio() {
                   />
                   <div className="visual-overlay" />
                </div>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </div>
@@ -107,7 +110,7 @@ export default function Portfolio() {
         .card-meta { display: flex; gap: 48px; margin-bottom: 56px; }
         .meta-label { font-size: 10px; font-weight: 900; color: var(--charcoal); opacity: 0.3; display: block; margin-bottom: 8px; letter-spacing: 0.1em; }
         .meta-value { font-size: 14px; font-weight: 700; color: var(--charcoal); }
-        .stack-list { display: flex; gap: 12px; font-size: 12px; font-weight: 700; color: var(--charcoal); opacity: 0.7; }
+        .stack-list { display: flex; gap: 12px; font-size: 12px; font-weight: 700; color: var(--charcoal); opacity: 0.7; flex-wrap: wrap; }
 
         .port-link {
           display: inline-flex;
@@ -130,9 +133,25 @@ export default function Portfolio() {
         .visual-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(255,255,255,0.8), transparent 80%); }
 
         @media (max-width: 1024px) {
-          .port-main-card { grid-template-columns: 1fr; padding: 40px; gap: 40px; }
-          .card-visual-simple { display: none; }
           .port-viewport { height: auto; padding: 100px 0; }
+          .port-main-card { 
+            grid-template-columns: 1fr; 
+            padding: 24px; 
+            gap: 24px; 
+            margin: 0 10px;
+          }
+          .card-headline { font-size: 56px; margin-bottom: 16px; }
+          .card-summary { display: none; }
+          .card-meta { margin-bottom: 32px; gap: 20px; }
+          .card-visual-simple { 
+            display: block; 
+            order: -1; 
+            aspect-ratio: 2/1; 
+          }
+          .port-sub { margin-bottom: 24px; text-align: center; }
+        }
+        @media (max-width: 768px) {
+          .card-headline { font-size: 42px; }
         }
       `}</style>
     </section>
