@@ -76,7 +76,7 @@ app.post('/api/chat', async (req, res) => {
 
   } catch (error) {
     console.error('Error generating response from Groq:', error);
-    res.status(500).json({ error: 'Failed to generate response' });
+    res.status(500).json({ error: 'Failed to generate response', details: error.message });
   }
 });
 
