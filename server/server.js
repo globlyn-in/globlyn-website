@@ -55,9 +55,11 @@ app.post('/api/chat', async (req, res) => {
     }
 
     if (!process.env.GEMINI_API_KEY) {
-      console.error('GEMINI_API_KEY is not set');
-      return res.status(500).json({ error: 'Server configuration error' });
+      console.error('GEMINI_API_KEY is not set in environment variables');
+      return res.status(500).json({ error: 'Server configuration error: Key missing' });
     }
+
+    console.log('AI Request initialized. Key prefix:', process.env.GEMINI_API_KEY.substring(0, 4));
 
     // Use Gemini Flash Latest (fastest and most cost-effective)
     const model = genAI.getGenerativeModel({
