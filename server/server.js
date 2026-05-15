@@ -13,8 +13,11 @@ dotenv.config({ path: path.join(__dirname, '.env') });
 const app = express();
 const port = process.env.PORT || 3001;
 
-// Initialize Groq
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+// Initialize Groq (Lazy initialization to prevent startup crash)
+let groq;
+if (process.env.GROQ_API_KEY) {
+  groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+}
 
 // Middleware
 app.use(cors());
@@ -49,7 +52,11 @@ app.post('/api/chat', async (req, res) => {
 
     if (!process.env.GROQ_API_KEY) {
       console.error('GROQ_API_KEY is not set');
-      return res.status(500).json({ error: 'Server configuration error' });
+      return res.status(500).json({ error: 'Server configuration error: GROQ_API_KEY missing' });
+    }
+
+    if (!groq) {
+      groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
     }
 
     // Format history for Groq (OpenAI format)
