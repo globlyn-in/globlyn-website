@@ -32,9 +32,9 @@ export default function Revealer() {
   const mediaP = Math.min(Math.max((scrollProgress - 0.35) / 0.65, 0), 1);
   const ratioP = Math.min(Math.max((mediaP - 0.4) / 0.6, 0), 1);
 
-  const navbarHeight = 90;
-  const centerY = 50 + (navbarHeight / 2 / window.innerHeight * 100);
-  const endTop = (navbarHeight / window.innerHeight) * 100;
+  const navbarHeight = 70;
+  const centerY = 50;
+  const endTop = 5; // Move higher
   const startTop = 130;
 
   let currentTop, currentTranslateY;
@@ -49,8 +49,8 @@ export default function Revealer() {
   }
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  const width = isMobile ? (60 + (ratioP * 40)) : (35 + (ratioP * 65));
-  const height = isMobile ? (40 + (ratioP * 30)) : (50 + (ratioP * 20));
+  const width = isMobile ? (70 + (ratioP * 30)) : (40 + (ratioP * 60));
+  const height = isMobile ? (45 + (ratioP * 20)) : (55 + (ratioP * 15));
 
   return (
     <div className="revealer-wrapper" ref={wrapperRef}>
@@ -105,19 +105,19 @@ export default function Revealer() {
         <div
           className="bottom-content"
           style={{
-            opacity: ratioP > 0.9 ? (ratioP - 0.9) * 10 : 0,
-            transform: `translateY(${(1 - ratioP) * 30}px)`
+            opacity: ratioP > 0.8 ? (ratioP - 0.8) * 5 : 0,
+            transform: `translateY(${(1 - ratioP) * 50}px)`
           }}
         >
           <div className="container bottom-inner">
-            <div className="stat-group">
-              <div className="stat-box"><span className="stat-label">SUCCESS</span><span className="stat-value">99%</span></div>
-              <div className="stat-box"><span className="stat-label">INDUSTRIES</span><span className="stat-value">25+</span></div>
-              <div className="stat-box"><span className="stat-label">QUALITY</span><span className="stat-value">A+</span></div>
-            </div>
-            <div className="content-reveal-group">
-              <p className="bottom-desc">
-                Our engineering team combines technical rigor with creative strategy to deliver solutions that redefine standards.
+            <div className="about-brief">
+              <span className="eyebrow brand-text">WHO WE ARE</span>
+              <h3 className="brief-title">QUALITY ENGINEERING FOR BUSINESS GROWTH.</h3>
+              <p className="brief-desc">
+                Globlyn was founded by a team of engineers and technologists who share a single conviction: 
+                that quality engineering is the most reliable path to business growth. 
+                We specialize in precision web development and intelligent process automation 
+                to deliver products that perform long after launch day.
               </p>
             </div>
           </div>
@@ -173,33 +173,47 @@ export default function Revealer() {
 
         .bottom-content {
           position: absolute;
-          bottom: 0; left: 0; width: 100%; height: calc(30vh - 45px);
+          bottom: 0; left: 0; width: 100%; height: 42vh;
           z-index: 15;
           background: var(--white);
           display: flex;
-          align-items: center;
-          justify-content: center;
-          border-top: 1px solid rgba(0,0,0,0.1);
+          align-items: flex-start;
+          padding-top: 60px;
+          border-top: 1px solid rgba(0,0,0,0.05);
         }
         .bottom-inner {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 60px;
           width: 100%;
         }
-        .stat-group { display: flex; gap: 40px; }
-        .stat-box { display: flex; flex-direction: column; }
-        .stat-label { font-size: 10px; opacity: 0.5; letter-spacing: 0.1em; }
-        .stat-value { font-size: 32px; font-weight: 800; color: var(--brand); }
-        .bottom-desc { font-size: 16px; max-width: 500px; opacity: 0.7; font-weight: 300; }
+        .about-brief {
+          max-width: 800px;
+          text-align: left;
+        }
+        .eyebrow { font-size: 11px; font-weight: 900; letter-spacing: 0.3em; margin-bottom: 24px; display: block; }
+        .brand-text { color: var(--brand); }
+        .brief-title { 
+          font-family: 'american-typewriter', serif; 
+          font-size: clamp(24px, 4vw, 48px); 
+          line-height: 1.1; 
+          margin-bottom: 32px; 
+          font-weight: 250;
+        }
+        .brief-desc { 
+          font-size: 18px; 
+          line-height: 1.6; 
+          color: rgba(0,0,0,0.6); 
+          max-width: 700px; 
+        }
 
         @media (max-width: 1024px) {
           .text-layer { width: 85vw; }
-          .bottom-inner { flex-direction: column; text-align: center; gap: 30px; }
+          .bottom-content { height: 45vh; padding-top: 40px; }
+          .about-brief { text-align: center; margin: 0 auto; }
+          .brief-desc { margin: 0 auto; }
         }
         @media (max-width: 768px) {
           .revealer-text { font-size: 32px; word-spacing: 0.2em; }
+          .brief-title { font-size: 28px; }
+          .brief-desc { font-size: 14px; }
         }
       `}</style>
     </div>

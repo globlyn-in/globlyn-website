@@ -16,7 +16,7 @@
 :root {
   --charcoal: #000000;
   --white: #FFFFFF;
-  --brand: #F84525;
+  --brand: #bb1b1b;
 
   --cursor-x: 0px;
   --cursor-y: 0px;
@@ -93,22 +93,46 @@ h3 {
 }
 
 .btn {
-  padding: 16px 32px;
-  font-weight: 400;
+  position: relative;
+  padding: 18px 40px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  transition: all var(--transition);
-  border: 1px solid var(--brand);
+  letter-spacing: 0.15em;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: var(--brand);
   color: var(--white);
-  text-decoration: none;
-  display: inline-block;
-  border-radius: 6px;
+  border: none;
+  border-radius: 0;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  z-index: 1;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background: var(--white);
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  z-index: -1;
 }
 
 .btn:hover {
-  background: transparent;
-  color: var(--brand);
+  color: var(--charcoal);
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover::before {
+  width: 100%;
 }
 
 .reveal {

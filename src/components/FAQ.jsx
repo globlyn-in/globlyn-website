@@ -27,8 +27,10 @@ export default function FAQ() {
                   <span className="faq-q">{f.q}</span>
                   <span className={`faq-plus ${active === i ? 'faq-plus--active' : ''}`}>+</span>
                 </button>
-                <div className="faq-body" style={{ maxHeight: active === i ? '200px' : '0' }}>
-                  <p className="faq-a">{f.a}</p>
+                <div className={`faq-body ${active === i ? 'faq-body--open' : ''}`}>
+                  <div className="faq-body-inner">
+                    <p className="faq-a">{f.a}</p>
+                  </div>
                 </div>
               </div>
             </ScrollReveal>
@@ -46,9 +48,25 @@ export default function FAQ() {
           font-family: 'american-typewriter', serif;
           font-size: 24px; font-weight: 250; color: var(--charcoal); 
         }
-        .faq-plus { font-size: 32px; font-weight: 200; transition: transform 0.3s; }
-        .faq-plus--active { transform: rotate(45deg); }
-        .faq-body { overflow: hidden; transition: max-height 0.4s var(--transition); }
+        .faq-plus { font-size: 32px; font-weight: 200; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .faq-plus--active { transform: rotate(45deg); color: var(--brand); }
+        
+        .faq-body { 
+          display: grid;
+          grid-template-rows: 0fr;
+          transition: grid-template-rows 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+          overflow: hidden; 
+        }
+        .faq-body--open { grid-template-rows: 1fr; }
+        
+        .faq-body-inner { 
+          min-height: 0; 
+          opacity: 0;
+          transform: translateY(10px);
+          transition: all 0.5s var(--transition);
+        }
+        .faq-body--open .faq-body-inner { opacity: 1; transform: translateY(0); }
+
         .faq-a { padding-bottom: 32px; font-size: 16px; font-weight: 400; color: rgba(31, 30, 29, 0.6); }
       `}</style>
     </section>

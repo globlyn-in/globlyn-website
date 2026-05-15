@@ -34,8 +34,10 @@ export default function Services() {
                   <h3 className="svc-title">{s.title}</h3>
                   <span className="svc-toggle">{active === i ? '−' : '+'}</span>
                 </button>
-                <div className="svc-body" style={{ maxHeight: active === i ? '200px' : '0' }}>
-                  <p className="svc-desc">{s.desc}</p>
+                <div className={`svc-body ${active === i ? 'svc-body--open' : ''}`}>
+                  <div className="svc-body-inner">
+                    <p className="svc-desc">{s.desc}</p>
+                  </div>
                 </div>
               </div>
             </ScrollReveal>
@@ -60,15 +62,32 @@ export default function Services() {
           flex: 1; font-size: clamp(24px, 4vw, 40px); font-weight: 250;
           font-family: 'american-typewriter', serif;
         }
-        .svc-toggle { font-size: 32px; font-weight: 200; color: var(--white); }
-        .svc-body { overflow: hidden; transition: max-height 0.5s var(--transition); }
+        .svc-toggle { font-size: 32px; font-weight: 200; color: var(--white); transition: transform 0.4s var(--transition); }
+        .svc-row--open .svc-toggle { transform: rotate(45deg); color: var(--brand); }
+        
+        .svc-body { 
+          display: grid;
+          grid-template-rows: 0fr;
+          transition: grid-template-rows 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+          overflow: hidden; 
+        }
+        .svc-body--open { grid-template-rows: 1fr; }
+        
+        .svc-body-inner { 
+          min-height: 0; 
+          opacity: 0;
+          transform: translateY(10px);
+          transition: all 0.5s var(--transition);
+        }
+        .svc-body--open .svc-body-inner { opacity: 1; transform: translateY(0); }
+
         .svc-desc {
           padding-bottom: 40px; font-size: 18px; color: rgba(255, 255, 255, 0.6);
           max-width: 700px; padding-left: 60px;
         }
         @media (max-width: 768px) {
           .svc-header { gap: 20px; padding: 32px 0; }
-          .svc-desc { padding-left: 0; }
+          .svc-desc { padding-left: 0; font-size: 16px; }
         }
       `}</style>
     </section>

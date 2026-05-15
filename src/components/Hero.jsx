@@ -103,8 +103,30 @@ export default function Hero() {
 
         .hero-desc { font-size: clamp(16px, 2vw, 20px); max-width: 600px; margin: 0 auto 56px; color: rgba(255, 255, 255, 0.6); }
         .hero-actions { display: flex; align-items: center; gap: 40px; justify-content: center; }
-        .hero-secondary { font-size: 12px; font-weight: 800; color: var(--white); text-decoration: underline; letter-spacing: 0.1em; transition: opacity 0.3s; }
-        .hero-secondary:hover { opacity: 0.5; }
+        .hero-secondary { 
+          font-size: 11px; 
+          font-weight: 800; 
+          color: var(--white); 
+          text-decoration: none; 
+          letter-spacing: 0.2em; 
+          position: relative;
+          padding-bottom: 4px;
+        }
+        .hero-secondary::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 1px;
+          background: var(--white);
+          transform: scaleX(0.3);
+          transform-origin: left;
+          transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .hero-secondary:hover::after {
+          transform: scaleX(1);
+        }
         @media (max-width: 768px) { 
           .hero-actions { flex-direction: column; gap: 24px; } 
           .hero-title { font-size: 42px; }
