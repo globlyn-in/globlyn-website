@@ -1,5 +1,5 @@
 (function () {
-  console.log('Globlyn Chatbot (Elena) Loaded');
+  console.log('Globlyn Chatbot (Elena 3D) Loaded');
   // Configuration
   const API_URL = 'https://globlyn-website.onrender.com/api/chat';
 
@@ -21,10 +21,10 @@
       width: 68px;
       height: 68px;
       border-radius: 50%;
-      background: #111;
+      background: #000;
       color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8);
       cursor: pointer !important;
       display: flex;
       align-items: center;
@@ -33,6 +33,7 @@
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       position: relative;
+      overflow: visible;
     }
 
     /* Rotating Attention Ring */
@@ -41,18 +42,8 @@
       position: absolute;
       inset: -3px;
       border-radius: 50%;
-      background: conic-gradient(from 0deg, transparent, #007AFF, #5856D6, transparent);
-      animation: globlyn-rotate 2s linear infinite;
-      z-index: -1;
-      opacity: 0.8;
-    }
-
-    #globlyn-chatbot-toggle::after {
-      content: '';
-      position: absolute;
-      inset: 1px;
-      background: #111;
-      border-radius: 50%;
+      background: conic-gradient(from 0deg, transparent, #5856D6, #AF52DE, transparent);
+      animation: globlyn-rotate 2.5s linear infinite;
       z-index: -1;
     }
 
@@ -61,9 +52,11 @@
       to { transform: rotate(360deg); }
     }
 
-    #globlyn-chatbot-toggle svg {
-      width: 32px;
-      height: 32px;
+    #globlyn-chatbot-toggle img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
       transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
@@ -78,12 +71,12 @@
       width: 400px;
       height: 640px;
       max-height: calc(100vh - 140px);
-      background: rgba(28, 28, 30, 0.85);
+      background: rgba(0, 0, 0, 0.95);
       backdrop-filter: blur(50px);
       -webkit-backdrop-filter: blur(50px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 30px;
-      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -101,8 +94,8 @@
 
     #globlyn-chatbot-header {
       padding: 24px;
-      background: rgba(255, 255, 255, 0.03);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -118,8 +111,8 @@
     }
 
     @keyframes globlyn-status-blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
     }
 
     #globlyn-chatbot-header-info {
@@ -129,22 +122,30 @@
     }
 
     .globlyn-avatar {
-      width: 48px;
-      height: 48px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #2C2C2E 0%, #1C1C1E 100%);
+      background: #111;
       border: 1px solid rgba(255,255,255,0.1);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(175, 82, 222, 0.2);
+    }
+
+    .globlyn-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .globlyn-header-text h3 {
       margin: 0;
       color: #fff;
-      font-size: 17px;
-      font-weight: 600;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
     }
 
     .globlyn-header-text .status-row {
@@ -156,7 +157,7 @@
 
     .globlyn-header-text p {
       margin: 0;
-      color: rgba(255, 255, 255, 0.4);
+      color: rgba(255, 255, 255, 0.5);
       font-size: 12px;
       font-weight: 500;
     }
@@ -174,12 +175,12 @@
     .globlyn-message-wrapper {
       display: flex;
       flex-direction: column;
-      max-width: 80%;
-      animation: globlyn-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      max-width: 82%;
+      animation: globlyn-pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     @keyframes globlyn-pop {
-      from { opacity: 0; transform: scale(0.8) translateY(10px); }
+      from { opacity: 0; transform: scale(0.9) translateY(15px); }
       to { opacity: 1; transform: scale(1) translateY(0); }
     }
 
@@ -187,56 +188,58 @@
     .globlyn-message-wrapper.user { align-self: flex-end; }
 
     .globlyn-message {
-      padding: 12px 18px;
+      padding: 14px 18px;
       font-size: 15px;
-      line-height: 1.4;
-      border-radius: 20px;
+      line-height: 1.5;
+      border-radius: 22px;
     }
 
     .bot .globlyn-message {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.08);
       color: #fff;
       border-bottom-left-radius: 4px;
       backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .user .globlyn-message {
-      background: linear-gradient(180deg, #007AFF 0%, #005BBF 100%);
+      background: linear-gradient(180deg, #0A84FF 0%, #0070E3 100%);
       color: #fff;
       border-bottom-right-radius: 4px;
-      box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
+      box-shadow: 0 8px 20px rgba(0, 122, 255, 0.25);
     }
 
     #globlyn-chatbot-input-area {
       padding: 20px;
-      background: transparent;
+      background: rgba(255, 255, 255, 0.02);
       display: flex;
       gap: 12px;
       align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     #globlyn-chatbot-input {
       flex: 1;
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 25px;
       padding: 12px 20px;
       color: #fff;
-      font-size: 16px; /* Prevents mobile auto-zoom */
+      font-size: 16px;
       outline: none;
       transition: all 0.3s;
     }
 
     #globlyn-chatbot-input:focus {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: #0A84FF;
     }
 
     #globlyn-chatbot-send {
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      background: #007AFF;
+      background: #0A84FF;
       color: #fff;
       border: none;
       cursor: pointer !important;
@@ -246,25 +249,26 @@
       transition: all 0.3s;
     }
 
-    #globlyn-chatbot-send:hover { transform: scale(1.1); background: #0084ff; }
+    #globlyn-chatbot-send:hover { transform: scale(1.1); background: #409CFF; }
 
     .globlyn-option-btn {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       color: #fff;
       border-radius: 18px;
-      padding: 8px 16px;
+      padding: 10px 18px;
       font-size: 13px;
+      font-weight: 500;
       cursor: pointer !important;
       transition: all 0.3s;
-      margin-top: 6px;
+      margin-top: 8px;
     }
 
     .globlyn-option-btn:hover {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: #007AFF;
+      background: rgba(255, 255, 255, 0.1);
+      border-color: #AF52DE;
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 15px rgba(175, 82, 222, 0.2);
     }
 
     .globlyn-notification {
@@ -273,11 +277,11 @@
       right: 0px;
       background: #fff;
       color: #000;
-      padding: 10px 18px;
-      border-radius: 20px;
+      padding: 12px 20px;
+      border-radius: 22px;
       font-size: 14px;
-      font-weight: 700;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      font-weight: 800;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
       opacity: 1;
       pointer-events: none;
       animation: globlyn-attention 4s infinite;
@@ -287,21 +291,21 @@
 
     @keyframes globlyn-attention {
       0%, 15%, 100% { transform: translateY(0) scale(1); }
-      5% { transform: translateY(-10px) scale(1.1); }
-      10% { transform: translateY(0) scale(1) rotate(3deg); }
-      12% { transform: rotate(-3deg); }
+      5% { transform: translateY(-12px) scale(1.1) rotate(2deg); }
+      10% { transform: translateY(0) scale(1) rotate(-2deg); }
+      12% { transform: rotate(0deg); }
     }
 
     .globlyn-notification::after {
       content: '';
       position: absolute;
       bottom: -6px;
-      right: 28px;
+      right: 30px;
       width: 0;
       height: 0;
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-      border-top: 6px solid #fff;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 7px solid #fff;
     }
 
     .globlyn-typing-indicator {
@@ -310,7 +314,7 @@
       padding: 12px 18px;
       align-items: center;
       align-self: flex-start;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.08);
       border-radius: 20px;
       border-bottom-left-radius: 4px;
     }
@@ -318,7 +322,7 @@
     .globlyn-dot {
       width: 6px;
       height: 6px;
-      background: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.4);
       border-radius: 50%;
       animation: globlyn-bounce 1.4s infinite ease-in-out both;
     }
@@ -327,14 +331,15 @@
     .globlyn-dot:nth-child(2) { animation-delay: -0.16s; }
 
     @keyframes globlyn-bounce {
-      0%, 80%, 100% { transform: scale(0); }
-      40% { transform: scale(1); }
+      0%, 80%, 100% { transform: scale(0.3); opacity: 0.3; }
+      40% { transform: scale(1); opacity: 1; }
     }
 
     @media (max-width: 480px) {
       #globlyn-chatbot-window {
-        width: calc(100vw - 48px);
-        height: 500px;
+        width: calc(100vw - 40px);
+        height: calc(100vh - 120px);
+        bottom: 80px;
       }
     }
   `;
@@ -356,16 +361,18 @@
       <div id="globlyn-chatbot-window">
         <div id="globlyn-chatbot-header">
           <div id="globlyn-chatbot-header-info">
-            <div class="globlyn-avatar">👩🏻‍💻</div>
+            <div class="globlyn-avatar">
+              <img src="/elena-avatar.png" alt="Elena 3D" />
+            </div>
             <div class="globlyn-header-text">
               <h3>Elena</h3>
               <div class="status-row">
                 <div class="globlyn-status-dot"></div>
-                <p>Always Active</p>
+                <p>Digital Strategist</p>
               </div>
             </div>
           </div>
-          <button id="globlyn-chatbot-close" style="background:none; border:none; color:rgba(255,255,255,0.4); cursor:pointer;">
+          <button id="globlyn-chatbot-close" style="background:none; border:none; color:rgba(255,255,255,0.3); cursor:pointer; padding: 8px;">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -385,10 +392,7 @@
       </div>
       <div id="globlyn-chatbot-notification" class="globlyn-notification">Need help? 👋</div>
       <button id="globlyn-chatbot-toggle">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-          <circle cx="12" cy="7" r="4"></circle>
-        </svg>
+        <img src="/elena-avatar.png" alt="Toggle" />
       </button>
     `;
 
@@ -457,7 +461,7 @@
       optionsContainer.style.display = 'flex';
       optionsContainer.style.flexWrap = 'wrap';
       optionsContainer.style.gap = '8px';
-      optionsContainer.style.marginTop = '8px';
+      optionsContainer.style.marginTop = '12px';
 
       options.forEach(optText => {
         const btn = document.createElement('button');
