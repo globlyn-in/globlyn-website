@@ -1,8 +1,8 @@
-(function() {
+(function () {
   console.log('J.A.R.V.I.S. Widget Loaded');
   // Configuration
-  const API_URL = 'http://localhost:3001/api/chat';
-  
+  const API_URL = 'https://globlyn-website.onrender.com';
+
   const CHATBOT_CSS = `
     #globlyn-chatbot-container * {
       cursor: auto !important;
@@ -430,16 +430,16 @@
   function toggleChat() {
     isOpen = !isOpen;
     const notification = document.getElementById('globlyn-chatbot-notification');
-    
+
     if (isOpen) {
       windowEl.classList.add('open');
       toggleBtn.style.transform = 'scale(0)';
-      if(notification) notification.classList.add('hidden');
+      if (notification) notification.classList.add('hidden');
       setTimeout(() => inputEl.focus(), 300);
     } else {
       windowEl.classList.remove('open');
       toggleBtn.style.transform = 'scale(1)';
-      if(notification) notification.classList.remove('hidden');
+      if (notification) notification.classList.remove('hidden');
     }
   }
 
@@ -449,12 +449,12 @@
 
     const msgEl = document.createElement('div');
     msgEl.className = 'globlyn-message';
-    
+
     // Parse options: text wrapped in [brackets]
     const optionRegex = /\[(.*?)\]/g;
     let cleanText = content;
     let options = [];
-    
+
     if (role === 'bot') {
       let match;
       while ((match = optionRegex.exec(content)) !== null) {
@@ -467,14 +467,14 @@
     // Format bold markdown
     let formattedContent = cleanText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     msgEl.innerHTML = formattedContent.replace(/\n/g, '<br/>');
-    
+
     wrapperEl.appendChild(msgEl);
 
     // Render Option Buttons if any
     if (options.length > 0) {
       const optionsContainer = document.createElement('div');
       optionsContainer.className = 'globlyn-options-container';
-      
+
       options.forEach(optText => {
         const btn = document.createElement('button');
         btn.className = 'globlyn-option-btn';
@@ -482,17 +482,17 @@
         btn.onclick = () => {
           // Disable all buttons in this message after one is clicked
           Array.from(optionsContainer.children).forEach(b => {
-             b.style.opacity = '0.5';
-             b.disabled = true;
+            b.style.opacity = '0.5';
+            b.disabled = true;
           });
           handleUserSubmission(optText);
         };
         optionsContainer.appendChild(btn);
       });
-      
+
       wrapperEl.appendChild(optionsContainer);
     }
-    
+
     messagesEl.appendChild(wrapperEl);
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
@@ -519,7 +519,7 @@
     inputEl.value = '';
     inputEl.disabled = true;
     sendBtn.disabled = true;
-    
+
     appendMessage('user', text);
     showTyping();
 
@@ -539,7 +539,7 @@
 
       if (response.ok && data.reply) {
         appendMessage('bot', data.reply);
-        
+
         // Update history (store the raw text so model context is intact)
         chatHistory.push({ role: 'user', content: text });
         chatHistory.push({ role: 'model', content: data.reply });
