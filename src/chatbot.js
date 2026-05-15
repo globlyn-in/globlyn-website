@@ -1,7 +1,7 @@
 (function () {
   console.log('J.A.R.V.I.S. Widget Loaded');
   // Configuration
-  const API_URL = 'https://globlyn-website.onrender.com';
+  const API_URL = 'https://globlyn-website.onrender.com/api/chat';
 
   const CHATBOT_CSS = `
     #globlyn-chatbot-container * {
