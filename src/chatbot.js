@@ -222,7 +222,7 @@
       border-radius: 25px;
       padding: 12px 20px;
       color: #fff;
-      font-size: 15px;
+      font-size: 16px; /* Prevents mobile auto-zoom */
       outline: none;
       transition: all 0.3s;
     }
